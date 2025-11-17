@@ -5,6 +5,10 @@ import App from './App.jsx';
 import {Provider} from 'react-redux';
 import store from './app/Store.js';
 
+import makeServer from './mirage/index.js';
+
+makeServer();
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>

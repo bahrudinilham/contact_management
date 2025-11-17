@@ -1,0 +1,121 @@
+.input_field {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  margin-bottom: 1.5rem;
+}
+
+.input_field > .label {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-size: 1.3rem;
+  color: var(--color-accent-1);
+}
+
+.input_field > .label > .label_content {
+  color: white;
+}
+
+.input_field > .input {
+  width: 100%;
+  padding: 1rem;
+
+  border: none;
+  outline: none;
+
+  border-radius: 0.4rem;
+
+  background-color: var(--color-accent-1);
+  font-size: 1.2rem;
+}
+
+.input_field > .input::placeholder {
+  color: black;
+  opacity: 0.8;
+  font-size: 1.2rem;
+}
+
+.input_field > .input_wrapper {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  width: 100%;
+}
+
+.input_field > .input_wrapper > .input {
+  width: 100%;
+  padding: 1rem;
+
+  border: none;
+  outline: none;
+
+  border-radius: 0.4rem;
+  border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem;
+
+  background-color: var(--color-accent-1);
+  font-size: 1.2rem;
+}
+
+.input_field > .input_wrapper > .input::placeholder {
+  color: black;
+  opacity: 0.8;
+  font-size: 1.2rem;
+}
+
+.input_field > .input_wrapper > .show_button {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: none;
+  outline: none;
+
+  border-radius: 0.4rem;
+  border-top-left-radius: 0rem;
+  border-bottom-left-radius: 0rem;
+
+  cursor: pointer;
+
+  background-color: var(--color-accent-2);
+}
+
+/* tablet */
+@media (min-width: 768px) {
+  .input_field > .label {
+    font-size: 1.2rem;
+  }
+}
+
+/* laptop */
+@media (min-width: 1024px) {
+  .input_field > .label {
+    font-size: 1.1rem;
+  }
+
+  .input_field > .input {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+
+  .input_field > .input::placeholder {
+    font-size: 1rem;
+  }
+
+  .input_field > .input_wrapper > .input {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+
+  .input_field > .input_wrapper > .input::placeholder {
+    font-size: 1rem;
+  }
+}

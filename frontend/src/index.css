@@ -1,0 +1,31 @@
+:root {
+  --color-primary: #040d12;
+  --color-secondary: #183d3d;
+  --color-accent-1: #5c8374;
+  --color-accent-2: #93b1a6;
+}
+
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Table */
+@media (min-width: 768px) {
+  html {
+    font-size: 68.75%;
+  }
+}
+
+/* Laptop */
+@media (min-width: 1024px) {
+  html {
+    font-size: 75%;
+  }
+}
