@@ -1,0 +1,29 @@
+:root {
+  /* --- Background Colors --- */
+  --color-bg-primary: #121212; /* Latar belakang utama (hampir hitam) */
+  --color-bg-secondary: #1c1c1c; /* Latar belakang panel/kartu (sedikit lebih terang) */
+  --color-bg-tertiary: #2a2a2a; /* Latar belakang bidang input/elemen non-interaktif */
+
+  /* --- Text and Icon Colors --- */
+  --color-text-primary: #ffffff; /* Teks utama/Judul (Putih terang) */
+  --color-text-secondary: #a0a0a0; /* Teks sekunder/Detail/Label (Abu-abu muda) */
+  --color-icon-primary: #ffffff; /* Ikon utama */
+  --color-icon-secondary: #6a6a6a; /* Ikon sekunder/non-aktif */
+
+  /* --- Accent and Interactive Colors --- */
+  --color-accent-blue: #3e82f7; /* Warna aksen utama (Biru cerah, digunakan untuk seleksi/tombol) */
+  --color-accent-blue-hover: #5b95fa; /* Varian untuk hover/active state */
+  --color-label-work: #50a0c0; /* Warna label 'Work' (Biru-hijau) */
+  --color-label-friends: #f78b45; /* Warna label 'Friends' (Oranye/Koral) */
+  --color-label-family: #4caf50; /* Warna label 'Family' (Hijau) */
+  --color-star: #ffd700; /* Warna ikon Bintang (Emas/Kuning) */
+
+  /* --- Border and Divider Colors --- */
+  --color-border-subtle: #333333; /* Garis pemisah/batas halus */
+
+  font-size: 14px; /* 1rem = 14px*/
+}
+
+a.active {
+  color: var(--color-star);
+}

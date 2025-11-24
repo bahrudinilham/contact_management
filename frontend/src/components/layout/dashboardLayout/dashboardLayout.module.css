@@ -1,0 +1,19 @@
+.dashboard_layout {
+  min-height: 100dvh;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+.dashboard_layout > .content_wrapper {
+  padding: 0.5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .dashboard_layout > .content_wrapper {
+    padding-bottom: 0rem;
+
+    margin-left: 12rem;
+    min-height: 100dvh;
+  }
+}

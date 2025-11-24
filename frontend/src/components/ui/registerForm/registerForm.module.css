@@ -1,0 +1,31 @@
+.page_form {
+  width: 100%;
+}
+
+.page_form > .button_submit {
+  background-color: var(--color-accent-blue);
+
+  margin-top: 1rem;
+
+  outline: none;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.7rem;
+  border-radius: 0.2rem;
+
+  cursor: pointer;
+
+  transition: 0.3s linear;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.page_form > .button_submit:hover {
+  background-color: var(--color-accent-blue-hover);
+}

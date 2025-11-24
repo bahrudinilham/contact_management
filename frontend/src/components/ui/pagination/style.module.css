@@ -1,0 +1,28 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.pagination > .pagination_button {
+  height: 2rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  outline: none;
+
+  background-color: var(--color-bg-secondary);
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border-subtle);
+}
+
+.pagination > .pagination_button.active {
+  color: var(--color-star);
+  border: 1px solid var(--color-star);
+}

@@ -1,0 +1,47 @@
+.input_field {
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.input_field > .label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+  opacity: 0.6;
+
+  display: inline-block;
+}
+
+.input_field:focus-within .label {
+  opacity: 1;
+}
+
+.input_field > .input_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--color-bg-tertiary);
+
+  border-bottom: 1px solid var(--color-border-subtle);
+  border-radius: 0.2rem;
+}
+
+.input_field > .input_wrapper > .input_icon {
+  padding: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.input_field.password_field > .input_wrapper > .input_icon.showpass_icon {
+  cursor: pointer;
+
+  outline: none;
+}
+
+.input_field > .input_wrapper > .input {
+  flex-grow: 1;
+
+  padding: 0.5rem 0rem;
+
+  outline: none;
+}

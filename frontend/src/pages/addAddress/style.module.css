@@ -1,0 +1,10 @@
+@media (min-width: 768px) {
+  .add_address_page > .page_form > .form_input_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    width: 100%;
+  }
+}

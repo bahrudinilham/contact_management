@@ -1,0 +1,15 @@
+.contact_group {
+  margin-bottom: 1rem;
+}
+
+.contact_group > .group_title {
+  background-color: var(--color-bg-tertiary);
+  border-radius: 0.2rem;
+  padding: 0.2rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact_group > .group_body {
+  display: grid;
+  gap: 0.5rem;
+}
