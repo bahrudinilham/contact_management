@@ -1,14 +1,20 @@
 import {Component} from 'react';
 import style from './style.module.css';
-import HeaderContent from '../../components/ui/headerContent/HeaderContent';
+
+// Component
+import Header from '../../components/ui/headerContent/HeaderContent';
 import SearchBar from '../../components/ui/searchbar/SearchBar';
-import {Link} from 'react-router';
-import {FaPlus} from 'react-icons/fa';
-import ContactService from '../../services/ContactService';
-import Helper from '../../libs/helpers';
-import ContactGroup from '../../components/ui/contactGroup/ContactGroup';
 import ContactCard from '../../components/ui/contactCard/ContactCard';
 import Pagination from '../../components/ui/pagination/Pagination';
+import {Link} from 'react-router';
+
+// Icons
+import {FaPlus} from 'react-icons/fa';
+
+// Others
+import ContactService from '../../services/ContactService';
+
+import Helper from '../../libs/helpers';
 import withHooks from '../../libs/hoc/withHooks';
 import {contactListHookMapper} from '../../libs/hooksMappers';
 
@@ -129,7 +135,7 @@ class ContactListPage extends Component {
   render() {
     return (
       <div className={`${style.contact_list}`}>
-        <HeaderContent
+        <Header
           title={'Contacts'}
           backTo={this.state.search ? '/dashboard/contacts' : ''}
         />
@@ -155,28 +161,26 @@ class ContactListPage extends Component {
           </section>
           {JSON.stringify(this.state.contacts.data) !== '{}' ? (
             <section className={`${style.body}`}>
-              {this.state.contacts.labels &&
-              this.state.contacts.labels.length > 0
-                ? this.state.contacts.labels.map((item) => {
-                    return (
-                      <ContactGroup title={item} key={item}>
-                        {this.state.contacts.data[item]
-                          ? this.state.contacts.data[item].map((contact) => {
-                              return (
-                                <ContactCard
-                                  iddata={contact.id}
-                                  firstname={contact.first_name}
-                                  lastname={contact.last_name}
-                                  key={contact.id}
-                                  reloadtoggle={() => this.reloadToggle()}
-                                />
-                              );
-                            })
-                          : ''}
-                      </ContactGroup>
-                    );
-                  })
-                : ''}
+              <div className={`${style.body_list}`}>
+                {this.state.contacts.labels &&
+                this.state.contacts.labels.length > 0
+                  ? this.state.contacts.labels.map((item) => {
+                      return this.state.contacts.data[item]
+                        ? this.state.contacts.data[item].map((contact) => {
+                            return (
+                              <ContactCard
+                                iddata={contact.id}
+                                firstname={contact.first_name}
+                                lastname={contact.last_name}
+                                key={contact.id}
+                                reloadtoggle={() => this.reloadToggle()}
+                              />
+                            );
+                          })
+                        : '';
+                    })
+                  : ''}
+              </div>
 
               <Pagination
                 currentPage={this.state.currentPage || 1}

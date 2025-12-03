@@ -1,15 +1,23 @@
 import {Component} from 'react';
 import style from './style.module.css';
 
-import HeaderContent from '../../components/ui/headerContent/HeaderContent';
+// Components
+import Header from '../../components/ui/headerContent/HeaderContent';
+import Form from '../../components/ui/form/Form';
+import InputField from '../../components/ui/inputField/InputField';
+import SubmitButton from '../../components/ui/submitButton/SubmitButton';
+
+// Icons
 import {FaBuilding, FaFlag, FaMap, FaRoad, FaSave} from 'react-icons/fa';
 import {FaLocationPin} from 'react-icons/fa6';
-import SubmitButton from '../../components/ui/submitButton/SubmitButton';
-import InputField from '../../components/ui/inputField/InputField';
-import Form from '../../components/ui/form/Form';
+
+// Others
 import ContactAddressService from '../../services/ContactAddressService';
 import withHooks from '../../libs/hoc/withHooks';
-import {editContactAddressHookMapper} from '../../libs/hooksMappers';
+import {
+  editContactAddressHookMapper,
+  alertContextHookMapper,
+} from '../../libs/hooksMappers';
 
 class EditAddress extends Component {
   constructor(props) {
@@ -55,7 +63,7 @@ class EditAddress extends Component {
         return;
       }
     } catch (error) {
-      alert(error.response.data.errors);
+      this.props.showAlert(error.response.data.errors, 'error');
       return;
     }
   }
@@ -67,7 +75,7 @@ class EditAddress extends Component {
     const addressId = this.props.addressId;
 
     if (!contactId || !addressId) {
-      alert('Contact and Address id is needed!');
+      this.props.showAlert('Contact and Address id is needed!', 'error');
       return;
     }
 
@@ -89,22 +97,22 @@ class EditAddress extends Component {
           postalCode: '',
         });
 
-        alert('Edit address sucessfully');
-
-        this.props.navigate(
-          `/dashboard/contacts/${contactId ? contactId : ''}`
-        );
+        this.props.showAlert('Edit address sucessfully', 'info', () => {
+          this.props.navigate(
+            `/dashboard/contacts/${contactId ? contactId : ''}`
+          );
+        });
         return;
       }
     } catch (error) {
-      alert(error.response.data.errors);
+      this.props.showAlert(error.response.data.errors, 'error');
       return;
     }
   }
   render() {
     return (
       <div className={`${style.add_address_page}`}>
-        <HeaderContent
+        <Header
           title={'Add Address'}
           backTo={`/dashboard/contacts/${
             this.props.contactId ? this.props.contactId : ''
@@ -167,6 +175,9 @@ class EditAddress extends Component {
   }
 }
 
-const EditAddressPage = withHooks(editContactAddressHookMapper)(EditAddress);
+const EditAddressWithAlert = withHooks(alertContextHookMapper)(EditAddress);
+const EditAddressPage = withHooks(editContactAddressHookMapper)(
+  EditAddressWithAlert
+);
 
 export default EditAddressPage;

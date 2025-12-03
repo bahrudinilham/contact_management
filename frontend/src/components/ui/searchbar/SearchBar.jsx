@@ -1,5 +1,10 @@
 import {Component} from 'react';
 import style from './style.module.css';
+
+// Components
+import Form from '../form/Form';
+
+// Icons
 import {FaSearch, FaTimes} from 'react-icons/fa';
 
 class SearchBar extends Component {
@@ -8,7 +13,7 @@ class SearchBar extends Component {
       this.props;
 
     return (
-      <form
+      <Form
         className={`${style.searchbar} ${className ? className : ''}`}
         onSubmit={(e) => handleSubmit(e)}>
         <div className={`${style.icon_wrapper} ${style.search_icon}`}>
@@ -31,7 +36,7 @@ class SearchBar extends Component {
           }}>
           <FaTimes />
         </button>
-      </form>
+      </Form>
     );
   }
 }

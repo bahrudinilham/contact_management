@@ -1,11 +1,21 @@
 import * as React from 'react';
 import style from './loginForm.module.css';
-import {FaKey, FaSignInAlt, FaUser, FaUserPlus} from 'react-icons/fa';
-import {loginHookMapper} from '../../../libs/hooksMappers';
+
+// Components
+import Form from '../form/Form';
+import InputField from '../inputField/InputField';
+import SubmitButton from '../submitButton/SubmitButton';
+
+// Icons
+import {FaKey, FaSignInAlt, FaUser} from 'react-icons/fa';
+
+// Others
 import withHooks from '../../../libs/hoc/withHooks';
+import {
+  alertContextHookMapper,
+  loginHookMapper,
+} from '../../../libs/hooksMappers';
 import UserService from '../../../services/UserService';
-import TextField from '../textField/TextField';
-import PasswordField from '../passwordField/PasswordField';
 
 class LoginForm extends React.Component {
   constructor() {
@@ -17,7 +27,6 @@ class LoginForm extends React.Component {
     };
 
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
-    this.onChangeHandler = this.onChangeHandler.bind(this);
   }
 
   async onSubmitHandler(e) {
@@ -33,61 +42,61 @@ class LoginForm extends React.Component {
         const token = response.data.data.token;
         this.props.setToken(token);
 
+        this.props.showAlert('Login successfully', 'info', () =>
+          this.props.navigate('/dashboard/contacts')
+        );
+
         this.setState({
           username: '',
           password: '',
         });
 
-        alert('Login sucessfully');
-
-        this.props.navigate('/dashboard/contacts');
         return;
       }
     } catch (error) {
-      alert(error.response.data.errors);
+      this.props.showAlert(error.response.data.errors, 'error');
+
+      this.setState({
+        username: '',
+        password: '',
+      });
+
       return;
     }
   }
 
-  onChangeHandler(key, value) {
-    this.setState({
-      [key]: value,
-    });
-  }
-
   render() {
     return (
-      <form
+      <Form
         className={`${style.page_form}`}
         autoComplete="off"
         onSubmit={(e) => this.onSubmitHandler(e)}>
-        <TextField
+        <InputField
           id={'username'}
           label={'Username'}
           Icon={FaUser}
           placeholder={'Enter your username'}
           value={this.state.username}
-          onChangeFn={(e) => this.onChangeHandler('username', e.target.value)}
+          onChange={(e) => this.setState({username: e.target.value})}
         />
 
-        <PasswordField
+        <InputField
           id={'password'}
           label={'Password'}
+          type={'password'}
           Icon={FaKey}
           placeholder={'Enter your password'}
           value={this.state.password}
-          onChangeFn={(e) => this.onChangeHandler('password', e.target.value)}
+          onChange={(e) => this.setState({password: e.target.value})}
         />
 
-        <button className={`${style.button_submit}`} type="submit" name="login">
-          <FaSignInAlt />
-          <span className={`${style.button_typography}`}>Login</span>
-        </button>
-      </form>
+        <SubmitButton name="login" Icon={FaSignInAlt} text="Login" />
+      </Form>
     );
   }
 }
 
-const WithLoginForm = withHooks(loginHookMapper)(LoginForm);
+const WithAlert = withHooks(alertContextHookMapper)(LoginForm);
+const WithLoginForm = withHooks(loginHookMapper)(WithAlert);
 
 export default WithLoginForm;

@@ -1,15 +1,23 @@
 import {Component} from 'react';
 import style from './style.module.css';
 
-import HeaderContent from '../../components/ui/headerContent/HeaderContent';
+// Components
+import Header from '../../components/ui/headerContent/HeaderContent';
+import Form from '../../components/ui/form/Form';
+import InputField from '../../components/ui/inputField/InputField';
+import SubmitButton from '../../components/ui/submitButton/SubmitButton';
+
+// Icons
 import {FaBuilding, FaFlag, FaMap, FaRoad, FaSave} from 'react-icons/fa';
 import {FaLocationPin} from 'react-icons/fa6';
-import SubmitButton from '../../components/ui/submitButton/SubmitButton';
-import InputField from '../../components/ui/inputField/InputField';
-import Form from '../../components/ui/form/Form';
+
+// Others
 import ContactAddressService from '../../services/ContactAddressService';
 import withHooks from '../../libs/hoc/withHooks';
-import {addContactAddressHookMapper} from '../../libs/hooksMappers';
+import {
+  addContactAddressHookMapper,
+  alertContextHookMapper,
+} from '../../libs/hooksMappers';
 
 class AddAddress extends Component {
   constructor(props) {
@@ -32,7 +40,7 @@ class AddAddress extends Component {
     const detailId = this.props.contactId;
 
     if (!detailId) {
-      alert('Detail Id needed!');
+      this.props.showAlert('Detail Id Needed', 'error');
       return;
     }
 
@@ -54,20 +62,23 @@ class AddAddress extends Component {
           postalCode: '',
         });
 
-        alert('Add address sucessfully');
+        this.props.showAlert('Add address sucessfully', 'info', () => {
+          this.props.navigate(
+            `/dashboard/contacts/${detailId ? detailId : ''}`
+          );
+        });
 
-        this.props.navigate(`/dashboard/contacts/${detailId ? detailId : ''}`);
         return;
       }
     } catch (error) {
-      alert(error.response.data.errors);
+      this.props.showAlert(error.response.data.errors, 'error');
       return;
     }
   }
   render() {
     return (
       <div className={`${style.add_address_page}`}>
-        <HeaderContent
+        <Header
           title={'Add Address'}
           backTo={`/dashboard/contacts/${
             this.props.contactId ? this.props.contactId : ''
@@ -130,6 +141,9 @@ class AddAddress extends Component {
   }
 }
 
-const AddAddressPage = withHooks(addContactAddressHookMapper)(AddAddress);
+const AddAddressWithAlert = withHooks(alertContextHookMapper)(AddAddress);
+const AddAddressPage = withHooks(addContactAddressHookMapper)(
+  AddAddressWithAlert
+);
 
 export default AddAddressPage;

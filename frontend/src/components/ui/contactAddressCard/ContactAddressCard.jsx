@@ -1,5 +1,10 @@
 import {Component} from 'react';
 import style from './style.module.css';
+
+// Components
+import {Link} from 'react-router';
+
+// Icons
 import {
   FaBuilding,
   FaFlag,
@@ -9,8 +14,11 @@ import {
   FaRoad,
   FaTrash,
 } from 'react-icons/fa';
-import {Link} from 'react-router';
+
+// Others
 import ContactAddressService from '../../../services/ContactAddressService';
+import withHooks from '../../../libs/hoc/withHooks';
+import {alertContextHookMapper} from '../../../libs/hooksMappers';
 
 class ContactAddressCard extends Component {
   constructor(props) {
@@ -20,27 +28,29 @@ class ContactAddressCard extends Component {
   }
 
   async deleteAddressHandler(contactId, addressId) {
-    const isConfirm = confirm(
-      `Are you sure to delete this (${this.props.street}, ${this.props.city}, ${this.props.province}, ${this.props.country}, ${this.props.postalCode})?`
-    );
+    this.props.showAlert(
+      `Are you sure to delete this (${this.props.street}, ${this.props.city}, ${this.props.province}, ${this.props.country}, ${this.props.postalCode})?`,
+      'confirm',
+      {
+        ok: async () => {
+          try {
+            const response = await ContactAddressService.delete(
+              contactId,
+              addressId
+            );
 
-    if (isConfirm) {
-      try {
-        const response = await ContactAddressService.delete(
-          contactId,
-          addressId
-        );
-
-        if (response.status === 200) {
-          alert('Delete address sucessfully');
-          this.props.reloadtoggle();
-          return;
-        }
-      } catch (error) {
-        alert(error.response.data.errors);
-        return;
+            if (response.status === 200) {
+              console.log('Delete address sucessfully');
+              this.props.reloadtoggle();
+              return;
+            }
+          } catch (error) {
+            console.log(error.response.data.errors);
+            return;
+          }
+        },
       }
-    }
+    );
   }
 
   render() {
@@ -130,4 +140,7 @@ class ContactAddressCard extends Component {
   }
 }
 
-export default ContactAddressCard;
+const ContactAddressCardWithAlert = withHooks(alertContextHookMapper)(
+  ContactAddressCard
+);
+export default ContactAddressCardWithAlert;

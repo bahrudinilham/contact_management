@@ -1,9 +1,15 @@
 import * as React from 'react';
 import style from './registerPage.module.css';
-import {FaAddressBook} from 'react-icons/fa';
+
+// Components
 import {Link} from 'react-router';
-import thumbnail from '../../assets/thumbnail.webp';
 import RegisterForm from '../../components/ui/registerForm/RegisterForm';
+
+// Icons
+import {FaAddressBook} from 'react-icons/fa';
+
+// Others
+import thumbnail from '../../assets/thumbnail.webp';
 
 class RegisterPage extends React.Component {
   render() {

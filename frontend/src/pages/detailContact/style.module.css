@@ -126,4 +126,20 @@
 
     width: 100%;
   }
+
+  .edit_contact_page > .contact_address_wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .edit_contact_page > .contact_address_wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .edit_contact_page > .contact_address_wrapper {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

@@ -18,11 +18,14 @@ class InputField extends React.Component {
   }
 
   render() {
-    const {id, label, Icon, isRequired, type, ...rest} = this.props;
+    const {id, label, Icon, isRequired, type, className, ...rest} = this.props;
 
     if (type === 'password') {
       return (
-        <div className={`${style.input_field} ${style.password_field}`}>
+        <div
+          className={`${style.input_field} ${style.password_field} ${
+            className ? className : ''
+          }`}>
           <label className={`${style.label}`} htmlFor={id}>
             {label}
           </label>
@@ -36,6 +39,7 @@ class InputField extends React.Component {
               name={id}
               type={this.state.showPassword ? 'text' : 'password'}
               required={isRequired !== undefined ? isRequired : true}
+              {...rest}
             />
             <button
               className={`${style.input_icon} ${style.showpass_icon}`}
@@ -49,7 +53,10 @@ class InputField extends React.Component {
     }
 
     return (
-      <div className={`${style.input_field} ${style.text_field}`}>
+      <div
+        className={`${style.input_field} ${style.text_field} ${
+          className ? className : ''
+        }`}>
         <label className={`${style.label}`} htmlFor={id}>
           {label ? label : 'Title'}
         </label>

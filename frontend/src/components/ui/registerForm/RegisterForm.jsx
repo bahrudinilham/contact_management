@@ -1,11 +1,21 @@
 import * as React from 'react';
-import {FaIdCard, FaKey, FaLock, FaUser, FaUserPlus} from 'react-icons/fa';
 import style from './registerForm.module.css';
-import TextField from '../textField/TextField';
-import PasswordField from '../passwordField/PasswordField';
+
+// Components
+import Form from '../form/Form';
+import InputField from '../inputField/InputField';
+import SubmitButton from '../submitButton/SubmitButton';
+
+// Icons
+import {FaIdCard, FaKey, FaLock, FaUser, FaUserPlus} from 'react-icons/fa';
+
+// Others
 import UserService from '../../../services/UserService';
 import withHooks from '../../../libs/hoc/withHooks';
-import {registerHookMapper} from '../../../libs/hooksMappers';
+import {
+  alertContextHookMapper,
+  registerHookMapper,
+} from '../../../libs/hooksMappers';
 
 class RegisterForm extends React.Component {
   constructor() {
@@ -19,14 +29,13 @@ class RegisterForm extends React.Component {
     };
 
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
-    this.onChangeHandler = this.onChangeHandler.bind(this);
   }
 
   async onSubmitHandler(e) {
     e.preventDefault();
 
     if (this.state.password !== this.state.confirmPassword) {
-      alert("Password does't match");
+      this.props.showAlert("Password does't match", 'error');
       return;
     }
 
@@ -38,8 +47,6 @@ class RegisterForm extends React.Component {
       });
 
       if (response.status === 200) {
-        alert('Register sucessfully');
-
         this.setState({
           fullname: '',
           username: '',
@@ -47,78 +54,69 @@ class RegisterForm extends React.Component {
           confirmPassword: '',
         });
 
-        this.props.navigate('/login');
+        this.props.showAlert('Register successfully', 'info', () =>
+          this.props.navigate('/login')
+        );
 
         return;
       }
     } catch (error) {
-      alert(error.response.data.errors);
+      this.props.showAlert(error.response.data.errors, 'error');
       return;
     }
   }
 
-  onChangeHandler(key, value) {
-    this.setState({
-      [key]: value,
-    });
-  }
-
   render() {
     return (
-      <form
+      <Form
         className={`${style.page_form}`}
         autoComplete="off"
         onSubmit={(e) => this.onSubmitHandler(e)}>
-        <TextField
+        <InputField
           id={'fullname'}
           label={'Fullname'}
           Icon={FaIdCard}
           placeholder={'Enter your name'}
           value={this.state.fullname}
-          onChangeFn={(e) => this.onChangeHandler('fullname', e.target.value)}
+          onChange={(e) => this.setState({fullname: e.target.value})}
         />
 
-        <TextField
+        <InputField
           id={'username'}
           label={'Username'}
           Icon={FaUser}
           placeholder={'Choose an username'}
           value={this.state.username}
-          onChangeFn={(e) => this.onChangeHandler('username', e.target.value)}
+          onChange={(e) => this.setState({username: e.target.value})}
         />
 
-        <PasswordField
+        <InputField
           id={'password'}
           label={'Password'}
           Icon={FaKey}
           placeholder={'Create a password'}
+          type={'password'}
           value={this.state.password}
-          onChangeFn={(e) => this.onChangeHandler('password', e.target.value)}
+          onChange={(e) => this.setState({password: e.target.value})}
         />
 
-        <PasswordField
+        <InputField
           id={'confirm_password'}
           label={'Confirm Password'}
           Icon={FaLock}
           placeholder={'Confirm your password'}
+          type={'password'}
           value={this.state.confirmPassword}
-          onChangeFn={(e) =>
-            this.onChangeHandler('confirmPassword', e.target.value)
-          }
+          onChange={(e) => this.setState({confirmPassword: e.target.value})}
         />
 
-        <button
-          className={`${style.button_submit}`}
-          type="submit"
-          name="register">
-          <FaUserPlus />
-          <span className={`${style.button_typography}`}>Register</span>
-        </button>
-      </form>
+        <SubmitButton name={'register'} Icon={FaUserPlus} text="Register" />
+      </Form>
     );
   }
 }
 
-const WithRegisterForm = withHooks(registerHookMapper)(RegisterForm);
+const WithAlert = withHooks(alertContextHookMapper)(RegisterForm);
+const WithRegisterForm = withHooks(registerHookMapper)(WithAlert);
 
 export default WithRegisterForm;

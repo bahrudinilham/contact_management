@@ -1,0 +1,127 @@
+.alert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 999;
+
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.alert > .alert_container {
+  position: relative;
+  z-index: 9999;
+
+  background-color: var(--color-bg-tertiary);
+  color: white;
+  padding: 1rem;
+  border: 1px solid var(--color-border-subtle);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  width: 20rem;
+
+  border-radius: 0.5rem;
+  transition: animation 0.2s ease;
+}
+
+.alert.show > .container {
+  animation: popup 0.25s ease forwards;
+}
+
+.alert.hide > .container {
+  animation: popout 0.25s ease forwards;
+}
+
+.alert > .alert_container > .container_header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.alert > .alert_container > .container_header > .header_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: fit-content;
+  aspect-ratio: 1 / 1;
+  padding: 0.2rem;
+
+  background-color: var(--color-label-work);
+  border-radius: 100%;
+
+  font-weight: 600;
+  font-size: 3rem;
+}
+
+.alert > .alert_container > .container_header > .header_icon.error_mode {
+  background-color: rgb(255, 12, 12);
+}
+
+.alert > .alert_container > .container_header > .header_typography {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.alert > .alert_container > .container_body {
+  text-align: center;
+  margin: 1.5rem 0px 2.5rem;
+}
+
+.alert > .alert_container > .container_footer > .footer_button {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0.5rem;
+
+  background-color: rgb(87, 225, 37);
+
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border-radius: 0.2rem;
+
+  outline: none;
+}
+
+.alert > .alert_container > .container_footer > .footer_button.error_mode {
+  background-color: rgb(255, 12, 12);
+}
+
+@keyframes popup {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popout {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+@media (min-width: 1024px) {
+  .alert > .alert_container {
+    width: 25rem;
+  }
+}

@@ -1,9 +1,15 @@
 import * as React from 'react';
 import style from './loginPage.module.css';
-import thumbnail from '../../assets/thumbnail.webp';
-import {FaAddressBook} from 'react-icons/fa';
+
+// Components
 import LoginForm from '../../components/ui/loginForm/LoginForm';
 import {Link} from 'react-router';
+
+// Icons
+import {FaAddressBook} from 'react-icons/fa';
+
+// Others
+import thumbnail from '../../assets/thumbnail.webp';
 
 class LoginPage extends React.Component {
   render() {

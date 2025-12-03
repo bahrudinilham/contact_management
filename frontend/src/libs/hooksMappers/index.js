@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import {useContext} from 'react';
 import {
   useLocation,
   useNavigate,
@@ -6,12 +7,22 @@ import {
   useSearchParams,
 } from 'react-router';
 import {useLocalStorage} from 'react-use';
+import {AlertContext} from '../context/AlertContext';
 
 export const navigateHookMapper = () => {
   const navigate = useNavigate();
 
   return {
     navigate,
+  };
+};
+
+export const alertContextHookMapper = () => {
+  const {showAlert, hideAlert} = useContext(AlertContext);
+
+  return {
+    showAlert,
+    hideAlert,
   };
 };
 
@@ -35,11 +46,10 @@ export const loginHookMapper = () => {
 
 export const logoutHookMapper = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useLocalStorage('token', '');
+  const removeToken = () => window.localStorage.removeItem('token');
 
   return {
-    token,
-    setToken,
+    removeToken,
     navigate,
   };
 };

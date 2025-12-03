@@ -34,10 +34,11 @@
 }
 
 .contact_card > .main > .fullname {
-  width: 100%;
+  width: 166.5px;
 
   white-space: nowrap;
   padding-left: 0.5rem;
+  text-overflow: ellipsis;
 
   max-width: 100rem;
   overflow: hidden;
@@ -80,6 +81,11 @@
   align-items: center;
 
   outline: none;
+  transition: rotate 0.3s;
+}
+
+.contact_card > .action_bar > .trigger_btn.active {
+  rotate: 180deg;
 }
 
 .contact_card > .action_bar > .action_wrapper {
@@ -130,7 +136,7 @@
   background-color: rgb(255, 32, 32);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .contact_card > .main {
     transition: unset;
   }
@@ -141,6 +147,7 @@
   }
 
   .contact_card > .main > .fullname {
+    width: 100%;
     transition: unset;
   }
 

@@ -1,5 +1,7 @@
 import {Component} from 'react';
 import style from './style.module.css';
+
+// Icons
 import {FaChevronLeft, FaChevronRight} from 'react-icons/fa';
 
 class Pagination extends Component {

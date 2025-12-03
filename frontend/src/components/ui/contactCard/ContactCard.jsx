@@ -1,8 +1,16 @@
 import {Component} from 'react';
 import style from './style.module.css';
-import {FaChevronLeft, FaInfoCircle, FaTrash, FaUser} from 'react-icons/fa';
+
+// Components
 import {Link} from 'react-router';
+
+// Icons
+import {FaChevronLeft, FaInfoCircle, FaTrash, FaUser} from 'react-icons/fa';
+
+// Others
 import ContactService from '../../../services/ContactService';
+import withHooks from '../../../libs/hoc/withHooks';
+import {alertContextHookMapper} from '../../../libs/hooksMappers';
 
 class ContactCard extends Component {
   constructor() {
@@ -18,31 +26,26 @@ class ContactCard extends Component {
   async deleteContactHandler() {
     const id = this.props.iddata;
 
-    const isConfirm = confirm(
-      `Are you sure to delete this (${this.props.firstname} ${this.props.lastname})?`
-    );
+    this.props.showAlert(
+      `Are you sure to delete this (${this.props.firstname} ${this.props.lastname})?`,
+      'confirm',
+      {
+        ok: async () => {
+          try {
+            const response = await ContactService.deleteContact(id);
 
-    if (isConfirm) {
-      try {
-        const response = await ContactService.deleteContact(id);
-
-        if (response.status === 200) {
-          alert(
-            `Delete contact (${this.props.firstname} ${this.props.lastname}) successfully`
-          );
-
-          this.props.reloadtoggle();
-          return;
-        }
-        return;
-      } catch (error) {
-        console.log(error);
-        alert(
-          `Delete contact (${this.props.firstname} ${this.props.lastname}) failed. \nError: ${error.response.data.errors}`
-        );
-        return;
+            if (response.status === 200) {
+              this.props.reloadtoggle();
+              return;
+            }
+            return;
+          } catch (error) {
+            console.log(error);
+            return;
+          }
+        },
       }
-    }
+    );
 
     return;
   }
@@ -76,7 +79,9 @@ class ContactCard extends Component {
             this.state.isShowAction ? style.active : ''
           }`}>
           <button
-            className={`${style.trigger_btn}`}
+            className={`${style.trigger_btn} ${
+              this.state.isShowAction ? style.active : ''
+            }`}
             onClick={() =>
               this.setState({isShowAction: !this.state.isShowAction})
             }>
@@ -104,4 +109,5 @@ class ContactCard extends Component {
   }
 }
 
-export default ContactCard;
+const ContactCardWithAlert = withHooks(alertContextHookMapper)(ContactCard);
+export default ContactCardWithAlert;

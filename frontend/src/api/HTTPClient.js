@@ -39,7 +39,7 @@ class HttpClient {
       (error) => {
         if (error.response && error.response.status === 401) {
           console.log('Unauthorized login');
-          window.location.href = '/login';
+          // window.location.href = '/login';
         }
 
         return Promise.reject(error);

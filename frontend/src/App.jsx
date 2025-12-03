@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router';
 
 import Layout from './components/layout/mainLayout/MainLayout';
 import DashboardLayout from './components/layout/dashboardLayout/DashboardLayout';
@@ -7,7 +7,6 @@ import DashboardLayout from './components/layout/dashboardLayout/DashboardLayout
 import RegisterPage from './pages/register/RegisterPage';
 import LoginPage from './pages/login/LoginPage';
 import ProfilePage from './pages/profile/ProfilePage';
-import LogoutPage from './components/ui/logout/Logout';
 import CreateContactPage from './pages/createContact/CreateContactPage';
 import ContactListPage from './pages/contactList/ContactListPage';
 import DetailContactPage from './pages/detailContact/DetailContact';
@@ -19,6 +18,8 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Navigate to={'/login'} />} />
+
           {/* Public Route */}
           <Route element={<Layout />}>
             <Route path="/register" element={<RegisterPage />} />
@@ -41,7 +42,6 @@ class App extends React.Component {
               />
             </Route>
             <Route path="profile" element={<ProfilePage />} />
-            <Route path="logout" element={<LogoutPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

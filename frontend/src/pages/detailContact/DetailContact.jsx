@@ -1,31 +1,21 @@
 import {Component} from 'react';
 import style from './style.module.css';
-import HeaderContent from '../../components/ui/headerContent/HeaderContent';
-import {
-  FaEnvelope,
-  FaHome,
-  FaIdCard,
-  FaKey,
-  FaLock,
-  FaPencilAlt,
-  FaPhone,
-  FaPlus,
-  FaSave,
-  FaTimes,
-  FaUser,
-  FaUserTag,
-} from 'react-icons/fa';
-import TextField from '../../components/ui/textField/TextField';
-import PasswordField from '../../components/ui/passwordField/PasswordField';
-import SubmitButton from '../../components/ui/submitButton/SubmitButton';
-import InputField from '../../components/ui/inputField/InputField';
-import Form from '../../components/ui/form/Form';
+
+// Components
+import Header from '../../components/ui/headerContent/HeaderContent';
+import ContactAddressCard from '../../components/ui/contactAddressCard/ContactAddressCard';
+import EditContactForm from '../../components/ui/editContactForm/EditContactForm';
+
+// Icons
+import {FaPencilAlt, FaPlus, FaTimes} from 'react-icons/fa';
+import {Link} from 'react-router';
+
+// Others
 import ContactService from '../../services/ContactService';
+import ContactAddressService from '../../services/ContactAddressService';
+
 import withHooks from '../../libs/hoc/withHooks';
 import {detailContactHookMapper} from '../../libs/hooksMappers';
-import ContactAddressCard from '../../components/ui/contactAddressCard/ContactAddressCard';
-import ContactAddressService from '../../services/ContactAddressService';
-import {Link} from 'react-router';
 
 class DetailContact extends Component {
   constructor() {
@@ -40,11 +30,6 @@ class DetailContact extends Component {
       email: '',
       phone: '',
 
-      newFirstname: '',
-      newLastname: '',
-      newEmail: '',
-      newPhone: '',
-
       addressList: [],
 
       isReload: false,
@@ -52,7 +37,6 @@ class DetailContact extends Component {
 
     this.editModeSwitcher = this.editModeSwitcher.bind(this);
     this.getContactById = this.getContactById.bind(this);
-    this.onSubmitHandler = this.onSubmitHandler.bind(this);
     this.reloadToggle = this.reloadToggle.bind(this);
   }
 
@@ -76,36 +60,6 @@ class DetailContact extends Component {
     }
   }
 
-  async onSubmitHandler(e) {
-    e.preventDefault();
-
-    try {
-      const detailId = this.props.contactId;
-
-      if (!detailId) {
-        alert('Detail Id needed!');
-        return;
-      }
-
-      const response = await ContactService.editContact(detailId, {
-        firstname: this.state.newFirstname,
-        lastname: this.state.newLastname,
-        email: this.state.newEmail,
-        phone: this.state.newPhone,
-      });
-
-      if (response.status === 200) {
-        alert('Edit contact successfully');
-        this.reloadToggle();
-        this.editModeSwitcher();
-        return;
-      }
-    } catch (error) {
-      alert(error.response.data.errors);
-      return;
-    }
-  }
-
   async getContactById(id) {
     try {
       const response = await ContactService.getById(id);
@@ -116,16 +70,11 @@ class DetailContact extends Component {
           lastname: response.data.data.last_name,
           email: response.data.data.email,
           phone: response.data.data.phone,
-
-          newFirstname: response.data.data.first_name,
-          newLastname: response.data.data.last_name,
-          newEmail: response.data.data.email,
-          newPhone: response.data.data.phone,
         });
         return;
       }
     } catch (error) {
-      alert(error.response.data.errors);
+      console.log(error.response.data.errors);
       return;
     }
   }
@@ -141,7 +90,7 @@ class DetailContact extends Component {
         return;
       }
     } catch (error) {
-      alert(error.response.data.errors);
+      console.log(error.response.data.errors);
       return;
     }
   }
@@ -161,10 +110,7 @@ class DetailContact extends Component {
   render() {
     return (
       <div className={`${style.edit_contact_page}`}>
-        <HeaderContent
-          title={'Detail Contact'}
-          backTo={'/dashboard/contacts'}
-        />
+        <Header title={'Detail Contact'} backTo={'/dashboard/contacts'} />
 
         <main className={`${style.container}`}>
           <div className={`${style.container_header}`}>
@@ -185,77 +131,17 @@ class DetailContact extends Component {
             </button>
           </div>
 
-          <Form
-            className={`${style.page_form}`}
-            autoComplete={'off'}
-            onSubmit={(e) => this.onSubmitHandler(e)}>
-            <div className={`${style.form_input_wrapper}`}>
-              <InputField
-                id={'first_name'}
-                label={'First Name'}
-                Icon={FaUser}
-                placeholder={'Enter first name'}
-                disabled={this.state.isEditMode ? false : true}
-                value={
-                  this.state.isEditMode
-                    ? this.state.newFirstname
-                    : this.state.firstname || ''
-                }
-                onChange={(e) => this.setState({newFirstname: e.target.value})}
-              />
-              <InputField
-                id={'last_name'}
-                label={'Last Name'}
-                Icon={FaUserTag}
-                placeholder={'Enter last name'}
-                disabled={this.state.isEditMode ? false : true}
-                value={
-                  this.state.isEditMode
-                    ? this.state.newLastname
-                    : this.state.lastname || ''
-                }
-                onChange={(e) => this.setState({newLastname: e.target.value})}
-              />
-            </div>
-            <InputField
-              id={'email'}
-              label={'Email'}
-              Icon={FaEnvelope}
-              placeholder={'Enter email address'}
-              disabled={this.state.isEditMode ? false : true}
-              type={'email'}
-              value={
-                this.state.isEditMode
-                  ? this.state.newEmail
-                  : this.state.email || ''
-              }
-              onChange={(e) => this.setState({newEmail: e.target.value})}
-            />
-            <InputField
-              id={'phone'}
-              label={'Phone'}
-              Icon={FaPhone}
-              placeholder={'Enter phone number'}
-              type={'tel'}
-              disabled={this.state.isEditMode ? false : true}
-              value={
-                this.state.isEditMode
-                  ? this.state.newPhone
-                  : this.state.phone || ''
-              }
-              onChange={(e) => this.setState({newPhone: e.target.value})}
-            />
-
-            {this.state.isEditMode ? (
-              <SubmitButton
-                name={'update_contact'}
-                Icon={FaSave}
-                text={'Update'}
-              />
-            ) : (
-              ''
-            )}
-          </Form>
+          <EditContactForm
+            isEdit={this.state.isEditMode}
+            firstname={this.state.firstname}
+            lastname={this.state.lastname}
+            email={this.state.email}
+            phone={this.state.phone}
+            reloadToggle={() => this.reloadToggle()}
+            editModeSwitcher={() => this.editModeSwitcher()}
+            detailId={this.props.detailId}
+            contactId={this.props.contactId}
+          />
         </main>
 
         <aside className={`${`${style.contact_address_wrapper}`}`}>
