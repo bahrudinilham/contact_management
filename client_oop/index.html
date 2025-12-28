@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Management - Programmer Zaman Now</title>
+    <!-- Include Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Poppins", "sans-serif"],
+            },
+            boxShadow: {
+              custom:
+                "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Primary Gradients */
+      .bg-gradient {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      }
+      .bg-gradient-accent {
+        background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+      }
+
+      /* Light Mode Glass */
+      .glass {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      /* Light Mode Gradient Borders */
+      .gradient-border {
+        position: relative;
+        background: white;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 0; /* Remove potential conflict with glass-card border */
+      }
+      .gradient-border::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 0.75rem;
+        padding: 2px; /* Increased to 2px for consistent thickness */
+        background: #3b82f6; /* Single color border */
+        -webkit-mask: linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+
+      /* Light Glow Effects */
+      .glow-sm {
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+      }
+      .glow-purple {
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.25);
+      }
+      .input-glow:focus {
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15),
+          0 4px 12px rgba(59, 130, 246, 0.1);
+      }
+
+      /* Animations */
+      .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-stagger {
+        opacity: 0;
+        animation: staggerFadeIn 0.5s ease-out forwards;
+      }
+      @keyframes staggerFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .pulse-glow {
+        animation: pulseGlow 3s ease-in-out infinite;
+      }
+      @keyframes pulseGlow {
+        0%,
+        100% {
+          box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+        }
+        50% {
+          box-shadow: 0 4px 25px rgba(139, 92, 246, 0.35),
+            0 0 40px rgba(139, 92, 246, 0.15);
+        }
+      }
+
+      /* Card Hover */
+      .card-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15),
+          0 0 20px rgba(59, 130, 246, 0.1);
+      }
+
+      /* Avatar Colors */
+      .avatar-gradient-1 {
+        background: linear-gradient(135deg, #f43f5e, #ec4899);
+      }
+      .avatar-gradient-2 {
+        background: linear-gradient(135deg, #8b5cf6, #a855f7);
+      }
+      .avatar-gradient-3 {
+        background: linear-gradient(135deg, #3b82f6, #6366f1);
+      }
+      .avatar-gradient-4 {
+        background: linear-gradient(135deg, #06b6d4, #0ea5e9);
+      }
+      .avatar-gradient-5 {
+        background: linear-gradient(135deg, #10b981, #14b8a6);
+      }
+      .avatar-gradient-6 {
+        background: linear-gradient(135deg, #f59e0b, #eab308);
+      }
+
+      /* Misc Utilities */
+      .text-gradient {
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    </style>
+
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
