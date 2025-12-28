@@ -5,7 +5,16 @@ import { userRouter } from "../route/api.js";
 import cors from "cors";
 
 export const web = express();
-web.use(cors());
+web.use(
+  cors({
+    origin: [
+      "https://contact-oop.up.railway.app",
+      "http://localhost:5173",
+      "http://localhost:3000",
+    ],
+    credentials: true,
+  })
+);
 web.use(express.json());
 
 web.use(publicRouter);
