@@ -14,6 +14,7 @@ web.use(
     optionsSuccessStatus: 200,
   })
 );
+web.options("*", cors()); // Enable pre-flight request for all routes
 web.use(express.json());
 
 web.use(publicRouter);
