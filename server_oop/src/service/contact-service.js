@@ -74,7 +74,6 @@ class ContactService extends ContactOwnedService {
 
   async search(user, request) {
     const searchRequest = this.validate(searchContactValidation, request);
-    const skip = (searchRequest.page - 1) * searchRequest.size;
 
     const filters = [
       {
@@ -117,24 +116,9 @@ class ContactService extends ContactOwnedService {
       where: {
         AND: filters,
       },
-      take: searchRequest.size,
-      skip: skip,
     });
 
-    const totalItems = await this.prisma.contact.count({
-      where: {
-        AND: filters,
-      },
-    });
-
-    return {
-      data: contacts,
-      paging: {
-        page: searchRequest.page,
-        total_item: totalItems,
-        total_page: Math.ceil(totalItems / searchRequest.size),
-      },
-    };
+    return contacts;
   }
 }
 

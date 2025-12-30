@@ -11,14 +11,10 @@ class ContactListPage extends BaseComponent {
     this.state = {
       token,
       searchQuery: "",
-      page: 1,
-      totalPage: 1,
       contacts: [],
       isLoading: true,
     };
-    this.getPages = this.getPages.bind(this);
     this.handleSearchContacts = this.handleSearchContacts.bind(this);
-    this.handlePageChange = this.handlePageChange.bind(this);
     this.fetchContacts = this.fetchContacts.bind(this);
     this.handleContactDelete = this.handleContactDelete.bind(this);
   }
@@ -27,25 +23,15 @@ class ContactListPage extends BaseComponent {
     this.fetchContacts();
   }
 
-  getPages() {
-    const pages = [];
-    for (let i = 1; i <= this.state.totalPage; i++) {
-      pages.push(i);
-    }
-    return pages;
-  }
-
   async fetchContacts() {
-    const { token, searchQuery, page } = this.state;
+    const { token, searchQuery } = this.state;
     this.setStatePartial({ isLoading: true });
     const response = await contactApi.getContactList(token, {
       name: searchQuery,
-      page,
     });
     if (response.isSuccess()) {
       this.setStatePartial({
         contacts: response.data ?? [],
-        totalPage: response.paging?.total_page ?? 1,
         isLoading: false,
       });
     } else {
@@ -56,15 +42,7 @@ class ContactListPage extends BaseComponent {
 
   async handleSearchContacts(e) {
     e.preventDefault();
-    this.setStatePartial({ page: 1 }, async () => {
-      await this.fetchContacts();
-    });
-  }
-
-  async handlePageChange(page) {
-    this.setStatePartial({ page }, async () => {
-      await this.fetchContacts();
-    });
+    await this.fetchContacts();
   }
 
   async handleContactDelete(id) {
@@ -86,7 +64,7 @@ class ContactListPage extends BaseComponent {
   }
 
   render() {
-    const { searchQuery, contacts, page, totalPage, isLoading } = this.state;
+    const { searchQuery, contacts, isLoading } = this.state;
 
     return (
       <>
@@ -205,54 +183,6 @@ class ContactListPage extends BaseComponent {
                 </div>
               ))}
             </div>
-
-            {totalPage > 1 && (
-              <div className="mt-10 flex justify-center">
-                <nav className="flex items-center space-x-2 glass-card rounded-xl shadow-md p-3 animate-fade-in">
-                  {page > 1 && (
-                    <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        this.handlePageChange(page - 1);
-                      }}
-                      className="px-4 py-2 bg-gray-50 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none transition-all duration-200 flex items-center"
-                    >
-                      <i className="fas fa-chevron-left mr-2"></i> Prev
-                    </a>
-                  )}
-                  {this.getPages().map((value) => (
-                    <a
-                      key={value}
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        this.handlePageChange(value);
-                      }}
-                      className={
-                        value === page
-                          ? "px-4 py-2 bg-gradient text-white rounded-lg font-medium shadow-md"
-                          : "px-4 py-2 bg-gray-50 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-200"
-                      }
-                    >
-                      {value}
-                    </a>
-                  ))}
-                  {page < totalPage && (
-                    <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        this.handlePageChange(page + 1);
-                      }}
-                      className="px-4 py-2 bg-gray-50 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none transition-all duration-200 flex items-center"
-                    >
-                      Next <i className="fas fa-chevron-right ml-2"></i>
-                    </a>
-                  )}
-                </nav>
-              </div>
-            )}
           </>
         )}
       </>

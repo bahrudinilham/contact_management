@@ -1,8 +1,8 @@
 import contactService from "../service/contact-service.js";
-import PagedController from "./paged-controller.js";
+import BaseController from "./base-controller.js";
 
-// Inheritance: ContactController mewarisi PagedController (yang mewarisi BaseController)
-class ContactController extends PagedController {
+// Inheritance: ContactController mewarisi BaseController
+class ContactController extends BaseController {
   constructor(service) {
     super(service);
     this.create = this.handle(this.createContact);
@@ -37,8 +37,6 @@ class ContactController extends PagedController {
       name: req.query.name,
       email: req.query.email,
       phone: req.query.phone,
-      page: req.query.page,
-      size: req.query.size,
     });
   }
 }
