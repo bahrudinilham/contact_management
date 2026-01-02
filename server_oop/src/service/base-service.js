@@ -1,12 +1,12 @@
 import { prismaClient } from "../application/database.js";
-import { validate as validateSchema } from "../validation/validation.js";
+import { validate } from "../validation/validation.js";
 
 class BaseService {
   // Encapsulation: Private fields untuk menjaga integritas dependency
   #prisma;
   #validateFn;
 
-  constructor(prisma = prismaClient, validator = validateSchema) {
+  constructor(prisma = prismaClient, validator = validate) {
     // Abstraction: Memastikan class ini tidak bisa di-instance langsung (Abstract Class)
     if (new.target === BaseService) {
       throw new Error(
