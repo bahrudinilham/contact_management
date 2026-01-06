@@ -1,4 +1,4 @@
-import userService from "../service/user-service.js";
+import { userService } from "../service/user-service.js";
 import BaseController from "./base-controller.js";
 
 // Inheritance: UserController mewarisi method dan properti dari BaseController
@@ -23,7 +23,7 @@ class UserController extends BaseController {
   async getCurrentUser(req) {
     return this.service.get(req.user.username);
   }
-
+  l;
   async updateCurrentUser(req) {
     return this.service.update({
       ...req.body,

@@ -6,15 +6,15 @@ class BaseService {
   #prisma;
   #validateFn;
 
-  constructor(prisma = prismaClient, validator = validate) {
+  constructor() {
     // Abstraction: Memastikan class ini tidak bisa di-instance langsung (Abstract Class)
     if (new.target === BaseService) {
       throw new Error(
         "BaseService is abstract and cannot be instantiated directly"
       );
     }
-    this.#prisma = prisma;
-    this.#validateFn = validator;
+    this.#prisma = prismaClient;
+    this.#validateFn = validate;
   }
 
   // Encapsulation: Getter untuk mengakses private property secara aman

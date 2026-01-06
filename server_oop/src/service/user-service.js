@@ -157,5 +157,4 @@ class UserService extends BaseService {
 
 const userService = new UserService();
 
-export { UserService };
-export default userService;
+export { userService };

@@ -1,6 +1,5 @@
 import {
   createContactValidation,
-  getContactValidation,
   searchContactValidation,
   updateContactValidation,
 } from "../validation/contact-validation.js";
