@@ -1,20 +1,20 @@
-import React from 'react';
-import BaseComponent from '../BaseComponent.jsx';
-import {userApi} from '../../lib/api/UserApi.js';
-import {alertService} from '../../lib/alert.js';
-import {withRouter} from '../../lib/withRouter.jsx';
-import {Link} from 'react-router';
+import React from "react";
+import BaseComponent from "../BaseComponent.jsx";
+import { userApi } from "../../lib/api/UserApi.js";
+import { alertService } from "../../lib/alert.js";
+import { withRouter } from "../../lib/withRouter.jsx";
+import { Link } from "react-router";
 
 class UserProfilePage extends BaseComponent {
   constructor(props) {
     super(props);
-    const token = localStorage.getItem('token') || '';
+    const token = localStorage.getItem("token") || "";
     this.state = {
       token,
-      name: '',
-      username: '',
-      password: '',
-      confirmPassword: '',
+      name: "",
+      username: "",
+      password: "",
+      confirmPassword: "",
     };
     this.handleSubmitProfile = this.handleSubmitProfile.bind(this);
     this.handleSubmitPassword = this.handleSubmitPassword.bind(this);
@@ -26,7 +26,7 @@ class UserProfilePage extends BaseComponent {
   }
 
   async fetchProfile() {
-    const {token} = this.state;
+    const { token } = this.state;
     const response = await userApi.detail(token);
     if (response.isSuccess()) {
       this.setStatePartial({
@@ -40,10 +40,10 @@ class UserProfilePage extends BaseComponent {
 
   async handleSubmitProfile(event) {
     event.preventDefault();
-    const {token, name} = this.state;
-    const response = await userApi.updateUser(token, {name});
+    const { token, name } = this.state;
+    const response = await userApi.updateProfile(token, { name });
     if (response.isSuccess()) {
-      await alertService.success('Profile updated successfully');
+      await alertService.success("Profile updated successfully");
     } else {
       await alertService.error(response.errorMessage);
     }
@@ -51,29 +51,30 @@ class UserProfilePage extends BaseComponent {
 
   async handleSubmitPassword(event) {
     event.preventDefault();
-    const {token, password, confirmPassword} = this.state;
+    const { token, password, confirmPassword } = this.state;
     if (password !== confirmPassword) {
-      await alertService.error('Passwords do not match');
+      await alertService.error("Passwords do not match");
       return;
     }
-    const response = await userApi.updateUser(token, {password});
+    const response = await userApi.updatePassword(token, { password });
     if (response.isSuccess()) {
-      await alertService.success('Password updated successfully');
-      this.setStatePartial({password: '', confirmPassword: ''});
+      await alertService.success("Password updated successfully");
+      this.setStatePartial({ password: "", confirmPassword: "" });
     } else {
       await alertService.error(response.errorMessage);
     }
   }
 
   render() {
-    const {name, username, password, confirmPassword} = this.state;
+    const { name, username, password, confirmPassword } = this.state;
 
     return (
       <>
         <div className="flex items-center mb-6">
           <Link
             to="/dashboard/contacts"
-            className="text-purple-600 hover:text-purple-700 mr-4 flex items-center transition-colors duration-200">
+            className="text-purple-600 hover:text-purple-700 mr-4 flex items-center transition-colors duration-200"
+          >
             <i className="fas fa-arrow-left mr-2"></i> Back to Contacts
           </Link>
         </div>
@@ -100,7 +101,8 @@ class UserProfilePage extends BaseComponent {
                 <div className="mb-5">
                   <label
                     htmlFor="name"
-                    className="block text-gray-600 text-sm font-medium mb-2">
+                    className="block text-gray-600 text-sm font-medium mb-2"
+                  >
                     Full Name
                   </label>
                   <div className="relative">
@@ -116,7 +118,7 @@ class UserProfilePage extends BaseComponent {
                       required
                       value={name}
                       onChange={(e) =>
-                        this.setStatePartial({name: e.target.value})
+                        this.setStatePartial({ name: e.target.value })
                       }
                     />
                   </div>
@@ -124,7 +126,8 @@ class UserProfilePage extends BaseComponent {
                 <div className="mb-5">
                   <label
                     htmlFor="name"
-                    className="block text-gray-600 text-sm font-medium mb-2">
+                    className="block text-gray-600 text-sm font-medium mb-2"
+                  >
                     Username
                   </label>
                   <div className="relative">
@@ -145,7 +148,8 @@ class UserProfilePage extends BaseComponent {
                 <div className="mt-6">
                   <button
                     type="submit"
-                    className="w-full bg-gradient text-white py-3 px-4 rounded-lg hover:opacity-90 focus:outline-none transition-all duration-200 font-medium shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center">
+                    className="w-full bg-gradient text-white py-3 px-4 rounded-lg hover:opacity-90 focus:outline-none transition-all duration-200 font-medium shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center"
+                  >
                     <i className="fas fa-save mr-2"></i> Update Profile
                   </button>
                 </div>
@@ -155,7 +159,8 @@ class UserProfilePage extends BaseComponent {
 
           <div
             className="glass-card gradient-border rounded-xl shadow-xl overflow-hidden card-hover animate-fade-in"
-            style={{animationDelay: '0.1s'}}>
+            style={{ animationDelay: "0.1s" }}
+          >
             <div className="p-6">
               <div className="flex items-center mb-4">
                 <div className="w-10 h-10 bg-gradient-accent rounded-full flex items-center justify-center mr-3 shadow-md glow-purple">
@@ -169,7 +174,8 @@ class UserProfilePage extends BaseComponent {
                 <div className="mb-5">
                   <label
                     htmlFor="new_password"
-                    className="block text-gray-600 text-sm font-medium mb-2">
+                    className="block text-gray-600 text-sm font-medium mb-2"
+                  >
                     New Password
                   </label>
                   <div className="relative">
@@ -185,7 +191,7 @@ class UserProfilePage extends BaseComponent {
                       required
                       value={password}
                       onChange={(e) =>
-                        this.setStatePartial({password: e.target.value})
+                        this.setStatePartial({ password: e.target.value })
                       }
                     />
                   </div>
@@ -194,7 +200,8 @@ class UserProfilePage extends BaseComponent {
                 <div className="mb-5">
                   <label
                     htmlFor="confirm_password"
-                    className="block text-gray-600 text-sm font-medium mb-2">
+                    className="block text-gray-600 text-sm font-medium mb-2"
+                  >
                     Confirm New Password
                   </label>
                   <div className="relative">
@@ -221,7 +228,8 @@ class UserProfilePage extends BaseComponent {
                 <div className="mt-6">
                   <button
                     type="submit"
-                    className="w-full bg-gradient-accent text-white py-3 px-4 rounded-lg hover:opacity-90 focus:outline-none transition-all duration-200 font-medium shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center">
+                    className="w-full bg-gradient-accent text-white py-3 px-4 rounded-lg hover:opacity-90 focus:outline-none transition-all duration-200 font-medium shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center"
+                  >
                     <i className="fas fa-key mr-2"></i> Update Password
                   </button>
                 </div>
