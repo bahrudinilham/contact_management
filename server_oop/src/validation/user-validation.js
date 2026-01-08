@@ -1,27 +1,27 @@
 import Joi from "joi";
 
 const registerUserValidation = Joi.object({
-    username: Joi.string().max(100).required(),
-    password: Joi.string().max(100).required(),
-    name: Joi.string().max(100).required()
+  username: Joi.string().max(100).required(),
+  password: Joi.string().max(100).required(),
+  name: Joi.string().max(100).required(),
 });
 
 const loginUserValidation = Joi.object({
-    username: Joi.string().max(100).required(),
-    password: Joi.string().max(100).required()
+  username: Joi.string().max(100).required(),
+  password: Joi.string().max(100).required(),
 });
 
 const getUserValidation = Joi.string().max(100).required();
 
 const updateUserValidation = Joi.object({
-    username: Joi.string().max(100).required(),
-    password: Joi.string().max(100).optional(),
-    name: Joi.string().max(100).optional()
-}).or('name', 'password');
+  username: Joi.string().max(100).required(),
+  password: Joi.string().max(100).optional(),
+  name: Joi.string().max(100).optional(),
+}).or("name", "password");
 
 export {
-    registerUserValidation,
-    loginUserValidation,
-    getUserValidation,
-    updateUserValidation
-}
+  registerUserValidation,
+  loginUserValidation,
+  getUserValidation,
+  updateUserValidation,
+};

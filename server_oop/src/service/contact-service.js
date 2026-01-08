@@ -5,8 +5,6 @@ import {
 } from "../validation/contact-validation.js";
 import ContactOwnedService from "./contact-owned-service.js";
 
-// Inheritance: ContactService mewarisi ContactOwnedService
-// (yang pada gilirannya mewarisi BaseService)
 class ContactService extends ContactOwnedService {
   async create(user, request) {
     const contact = this.validate(createContactValidation, request);

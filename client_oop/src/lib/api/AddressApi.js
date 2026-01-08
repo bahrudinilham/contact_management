@@ -2,7 +2,7 @@ import { ResourceApi } from "./BaseApi.js";
 
 class AddressApi extends ResourceApi {
   constructor() {
-    super('addresses');
+    super("addresses");
   }
 
   collectionPath(contactId) {

@@ -1,7 +1,6 @@
 import contactService from "../service/contact-service.js";
 import BaseController from "./base-controller.js";
 
-// Inheritance: ContactController mewarisi BaseController
 class ContactController extends BaseController {
   constructor(service) {
     super(service);

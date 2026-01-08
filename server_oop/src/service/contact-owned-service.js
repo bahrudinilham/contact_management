@@ -2,9 +2,6 @@ import BaseService from "./base-service.js";
 import { getContactValidation } from "../validation/contact-validation.js";
 import { ResponseError } from "../error/response-error.js";
 
-// Inheritance: ContactOwnedService mewarisi BaseService
-// Class ini bertujuan sebagai "Intermediate Class" yang menyediakan fungsionalitas umum (findContactOrThrow)
-// untuk service yang berurusan dengan data Kontak (ContactService dan AddressService).
 class ContactOwnedService extends BaseService {
   async findContactOrThrow(
     user,

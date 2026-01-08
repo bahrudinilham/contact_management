@@ -6,8 +6,6 @@ import {
   updateAddressValidation,
 } from "../validation/address-validation.js";
 
-// Inheritance: AddressService mewarisi ContactOwnedService
-// Hal ini memungkinkan penggunaan method 'findContactOrThrow' yang didefinisikan di parent class
 class AddressService extends ContactOwnedService {
   async create(user, contactId, request) {
     const contact = await this.findContactOrThrow(user, contactId, {

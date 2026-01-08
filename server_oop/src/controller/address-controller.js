@@ -1,7 +1,6 @@
 import addressService from "../service/address-service.js";
 import BaseController from "./base-controller.js";
 
-// Inheritance: AddressController mewarisi BaseController
 class AddressController extends BaseController {
   constructor(service) {
     super(service);

@@ -9,8 +9,6 @@ import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 import BaseService from "./base-service.js";
 
-// Inheritance: UserService mewarisi BaseService
-// Mendapatkan akses ke properti prisma dan method validate
 class UserService extends BaseService {
   async register(request) {
     const user = this.validate(registerUserValidation, request);
@@ -127,7 +125,7 @@ class UserService extends BaseService {
       },
     });
   }
-
+ 
   async logout(username) {
     const validUsername = this.validate(getUserValidation, username);
 
